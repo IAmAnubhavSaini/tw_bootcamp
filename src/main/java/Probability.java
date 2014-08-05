@@ -1,30 +1,33 @@
-public class Probability {
+public class Probability  {
 
     private double probability;
 
-    public  Probability(double value) throws Exception{
+    public  Probability(double value) throws IllegalArgumentException{
 
         if(value>=0.0 && value<=1.0)
             probability = value;
         else
-            throw new Exception("You know probability can have range {0,1}");
+            throw new IllegalArgumentException("You know probability can have range {0,1}");
     }
 
-    public double And(Probability p1)
+    public Probability And(Probability p1)
     {
-        return  probability*p1.probability;
+        return  new Probability(probability*p1.probability);
     }
 
-    public double Or(Probability p1)
+    public Probability Or(Probability p1)
     {
-        double secondProbability=p1.probability;
-        return  (probability+secondProbability) - this.And(p1);
+        double oredProbability = probability + p1.probability - (And(p1).probability);
+        return  new Probability(oredProbability);
     }
 
-    public double Not()
+    public Probability Not()
     {
-        return  1-probability;
+        return  new Probability(1-probability);
     }
+
+
+
 
     public boolean Equals(Probability second){
         return probability == second.probability;
